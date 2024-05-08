@@ -40,6 +40,13 @@ ScrollReveal().reveal(".header__content .header__btn", {
 	delay: 1500,
 });
 
+
+ScrollReveal().reveal(".special__card", {
+	...scrollRevealOption,
+	interval: 500,
+});
+
+
 ScrollReveal().reveal(".explore__image img", {
 	...scrollRevealOption,
 	origin: "left",
@@ -57,15 +64,16 @@ ScrollReveal().reveal(".explore__content .explore__btn", {
 	delay: 1500,
 });
 
-ScrollReveal().reveal(".banner__card", {
+
+ScrollReveal().reveal(".contact__container .section__header", {
 	...scrollRevealOption,
-	interval: 500,
+	delay: 500,
 });
-
-const swiper = new Swiper(".swiper", {
-	loop: true,
-
-	pagination: {
-		el: ".swiper-pagination",
-	},
+ScrollReveal().reveal(".contact__information", {
+	...scrollRevealOption,
+	delay: 1000,
+});
+ScrollReveal().reveal(".contact__input", {
+	...scrollRevealOption,
+	delay: 1000,
 });
