@@ -121,7 +121,8 @@
 			<div class="special__grid">
 				<script>
 					const grid = document.querySelector(".special__grid")
-					const url = "https://docs.google.com/spreadsheets/d/1M8CKm3BKrMO54zFxfOF4PCYX2Vdniy8yPus-zIoIC4w/export?format=csv"
+					const url = "https://docs.google.com/spreadsheets/d/1zeqH3GOujVgYyreC3IQ7sM0m6dA9vzSSg2SnPSN_ILw/export?format=csv"
+					
 					fetch(url).then(result=>result.text()).then(function(csvtext) {
 						return csv().fromString(csvtext)
 					}).then(function (csv) {
