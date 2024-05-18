@@ -14,6 +14,8 @@
 			rel="stylesheet"
 			href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
 		/>
+		
+		<script src="https://cdn.rawgit.com/Keyang/node-csvtojson/d41f44aa/browser/csvtojson.min.js"></script>
 		<link rel="stylesheet" href="styles.css" />
 		<title>HIKVISION Vietnam - Camera</title>
 	</head>
@@ -45,7 +47,7 @@
 		<section class="section__container special__container" id="special">
 			<h2 class="section__header">CAMERA</h2>
 			<div class="special__grid">
-				<div class="special__card">
+				<!-- <div class="special__card">
 					<img
 						src="assets/DS-2DY5225IX-DM(T5).png"
 						alt="special"
@@ -179,7 +181,30 @@
 						<p class="price">10,999,000đ</p>
 						<button class="btn">Thêm giỏ hàng</button>
 					</div>
-				</div>
+				</div> -->
+
+				<script>
+					const grid = document.querySelector(".special__grid")
+					const url = "https://docs.google.com/spreadsheets/d/1M8CKm3BKrMO54zFxfOF4PCYX2Vdniy8yPus-zIoIC4w/export?format=csv"
+					fetch(url).then(result=>result.text()).then(function(csvtext) {
+						return csv().fromString(csvtext)
+					}).then(function (csv) {
+
+						csv.forEach(function (row) {
+							const productHTML =
+							"<div class='special__card'>" +
+								"<img src='" + row.HinhAnh + "'>" +
+								"<h4>" + row.TenSanPham + "</h4>" +
+								"<p>" + row.ChiTiet + "</p>" +
+								"<div class='special__footer'>" +
+								"<p class='price'>" + row.Gia + "</p>" +
+								"<button class='btn'> Thêm giỏ hàng </button>" +
+								"</div>" +
+							"</div>";
+						grid.innerHTML += productHTML;
+						});
+					});
+					</script>
 			</div>
 		</section>
 

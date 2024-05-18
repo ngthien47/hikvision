@@ -19,6 +19,14 @@
 			rel="stylesheet"
 			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
 		/>
+		<link
+			rel="stylesheet"
+			href="https://cdn.jsdelivr.net/npm/sweetalert2@11.11.0/dist/sweetalert2.min.css"
+		/>
+		
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+		<script src="https://cdn.rawgit.com/Keyang/node-csvtojson/d41f44aa/browser/csvtojson.min.js"></script>
+
 		<link rel="stylesheet" href="styles.css" />
 		<title>HIKVISION Vietnam</title>
 	</head>
@@ -63,14 +71,14 @@
 
 		<section class="section__container special__container" id="special">
 			<h2 class="section__header">Sản phẩm nổi bật</h2>
-			<div class="special__grid">
+			<!-- <div class="special__grid">
 				<div class="special__card">
 					<img
 						src="assets/DS-2DY5225IX-DM(T5).png"
 						alt="special"
 					/>
 					<h4>DS-2DY5225IX-DM(T5)</h4>
-					<p>	
+					<p>
 						5-inch 2 MP 25X DarkFighter IR Network
 						Positioning System
 					</p>
@@ -109,7 +117,33 @@
 						<button class="btn">Thêm giỏ hàng</button>
 					</div>
 				</div>
+			</div> -->
+			<div class="special__grid">
+				<script>
+					const grid = document.querySelector(".special__grid")
+					const url = "https://docs.google.com/spreadsheets/d/1M8CKm3BKrMO54zFxfOF4PCYX2Vdniy8yPus-zIoIC4w/export?format=csv"
+					fetch(url).then(result=>result.text()).then(function(csvtext) {
+						return csv().fromString(csvtext)
+					}).then(function (csv) {
+
+						csv.forEach(function (row) {
+							const productHTML =
+							"<div class='special__card'>" +
+								"<img src='" + row.HinhAnh + "'>" +
+								"<h4>" + row.TenSanPham + "</h4>" +
+								"<p>" + row.ChiTiet + "</p>" +
+								"<div class='special__footer'>" +
+								"<p class='price'>" + row.Gia + "</p>" +
+								"<button class='btn'> Thêm giỏ hàng </button>" +
+								"</div>" +
+							"</div>";
+						grid.innerHTML += productHTML;
+						});
+					});
+					</script>
 			</div>
+
+
 		</section>
 
 		<section class="section__container explore__container" id="explore">
@@ -174,7 +208,8 @@
 						<div class="contact__details">
 							<span>Địa chỉ</span>
 							<span
-								>P. Bến Nghé, Q. 1, TP. HCM</span
+								>P. Bến Nghé, Q. 1, TP.
+								HCM</span
 							>
 						</div>
 					</div>
@@ -198,11 +233,17 @@
 					</div>
 				</div>
 				<div class="contact__form">
-					<form class="contact__input">
+					<form
+						id="form"
+						class="contact__input"
+						name="google-sheet"
+						action=""
+						method="post"
+					>
 						<div class="input half-width">
 							<input
 								type="text"
-								name=""
+								name="Họ và tên"
 								required="required"
 								placeholder="Họ và tên"
 							/>
@@ -210,7 +251,7 @@
 						<div class="input half-width">
 							<input
 								type="email"
-								name=""
+								name="Địa chỉ Email"
 								required="required"
 								placeholder="Địa chỉ Email"
 							/>
@@ -218,19 +259,21 @@
 						<div class="input full-width">
 							<input
 								type="text"
-								name=""
+								name="Số điện thoại"
 								required="required"
 								placeholder="Số điện thoại"
 							/>
 						</div>
 						<div class="input full-width">
 							<textarea
+							name="Nội dung"
 								required="required"
 								placeholder="Nội dung"
 							></textarea>
 						</div>
 						<div class="input full-width">
-							<button>Đăng ký</button>
+							<input type="submit" class="btn-submit" value="Gửi">
+							</input>
 						</div>
 					</form>
 				</div>
@@ -281,6 +324,34 @@
 		</footer>
 
 		<script src="https://unpkg.com/scrollreveal"></script>
+		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.11.0/dist/sweetalert2.min.js"></script>
 		<script src="main.js"></script>
+		<script>
+			const scriptURL =
+				"https://script.google.com/macros/s/AKfycby0MMFnuPMpSlOhuv71GQ1gdTxqOPnKVw971Rkri90Nw8Ti3rt-SWuyBJY9_0KiIiGqpA/exec";
+			const form = document.forms["google-sheet"];
+
+			form.addEventListener("submit", (e) => {
+				e.preventDefault();
+				fetch(scriptURL, {
+					method: "POST",
+					body: new FormData(form),
+				})
+					.then((response) =>
+						Swal.fire({
+							position: "center",
+							icon: "success",
+							title: "Thông tin của bạn đã được gửi!",
+							showConfirmButton: false,
+							timer: 1500,
+						}).then(function () {
+							location.reload();
+						})
+					)
+					.catch((error) =>
+						console.error("Error!", error.message)
+					);
+			});
+		</script>
 	</body>
 </html>
