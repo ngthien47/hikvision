@@ -613,13 +613,14 @@ nav {
 	border-width: 2px 2px;
 	border-color: var(--text-dark);
 	outline: none;
+	font-family: "Roboto" !important;
 }
 
 .contact__input textarea {
 	resize: none;
 	height: 220px;
 	display: block;
-	font-family: "Roboto";
+	font-family: "Roboto" !important;
 }
 
 textarea::-webkit-scrollbar {
