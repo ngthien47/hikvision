@@ -619,6 +619,7 @@ nav {
 	resize: none;
 	height: 220px;
 	display: block;
+	font-family: "Roboto";
 }
 
 textarea::-webkit-scrollbar {
